@@ -1,5 +1,10 @@
 package com.company;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.InputMismatchException;
@@ -9,8 +14,9 @@ import java.util.Scanner;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
+    static Path boardPath = Paths.get("leaderboard.txt");
+    //tut chto to nado pomenjat'
     private static final List<GameResult> leaderBoard = new ArrayList<>();
-
     public static void main(String[] args) {
         Random random = new Random();
         do {
@@ -48,6 +54,7 @@ public class Main {
             System.out.print("Do you want to play again? (Y/n) ");
         } while (!scanner.nextLine().equals("n"));
         System.out.println("Good bye!");
+        storeLeaderboard();
     }
 
     private static void printLeaderBoard() {
@@ -95,6 +102,31 @@ public class Main {
         }
     }
 
+    static List<GameResult> loadLeaderboard(){
+        List<GameResult> result = new ArrayList<>();
+        try (Scanner in = new Scanner(boardPath)){
+            while (in.hasNext()) {
+                GameResult r = new GameResult();
+                r.name = in.next();
+                r.attempts = in.nextInt();
+                r.time = in.nextLong();
+                result.add(r);
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file");
+        }
+        return result;
+    }
+
+    static void storeLeaderboard() {
+        try (Writer out = Files.newBufferedWriter(boardPath)) {
+            for (GameResult r : leaderBoard) {
+                String Line = String.format("%s %d %b\n", r.name, r.attempts, r.time);
+                out.write(Line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file");
+        }
+    }
+
 }
-
-
