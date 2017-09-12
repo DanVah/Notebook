@@ -1,5 +1,7 @@
 package Notebook;
 
+import asg.cliche.Command;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class Notebook {
 
 
     // Make a Command
+    @Command
     public void create(String firstName, String lastName, String phone) {
         Record t = new Record();
         t.setFirstName(firstName);
@@ -18,6 +21,8 @@ public class Notebook {
         records.add(t);
     }
 
-    //Make a Command
-    public List<Record> list
+    @Command
+    public List<Record> list(){
+        return records;
+    }
 }
