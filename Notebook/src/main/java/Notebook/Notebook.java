@@ -12,13 +12,27 @@ public class Notebook {
 
 
     @Command
-    public void create(String firstName, String lastName, String email, String address, String... phones) {
-        Record t = new Record();
+    public void createPerson(String firstName, String lastName, String email, String address, String... phones) {
+        Person t = new Person();
         t.setFirstName(firstName);
         t.setLastName(lastName);
         t.setEmail(email);
         t.setAddress(address);
         t.addPhones(phones);
+        records.add(t);
+    }
+
+    @Command
+    public void createNote (String note) {
+        Note t = new Note();
+        t.setNote(note);
+        records.add(t);
+    }
+
+    @Command
+    public void createReminder (String time) {
+        Reminder t = new Reminder();
+        t.setTime(time);
         records.add(t);
     }
 
