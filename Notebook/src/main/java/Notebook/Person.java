@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Person extends Record {
+public class Person extends Note {
 
     private String firstName;
     private String lastName;
@@ -32,7 +32,7 @@ public class Person extends Record {
         return email;
     }
 
-    public void setEmail (String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -48,8 +48,8 @@ public class Person extends Record {
         return phones;
     }
 
-    public void addPhones(String... phone) {
-        Collections.addAll(this.phones = phones);
+    public void addPhones(String... phones) {
+        Collections.addAll(this.phones, phones);
     }
 
 
@@ -61,7 +61,31 @@ public class Person extends Record {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", note='" + getNote() + '\'' +
                 ", phones='" + phones + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean contains(String str) {
+        if (super.contains(str)) {
+            return true;
+        } else if (lastName.contains(str)) {
+            return true;
+        } else if (firstName.contains(str)) {
+            return true;
+        } else if (email.contains(str)) {
+            return true;
+        }else if (address.contains(str)) {
+            return true;
+        } else {
+            for (String p : phones) {
+                if (p.toLowerCase().contains(str)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
 }

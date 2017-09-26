@@ -1,6 +1,6 @@
 package Notebook;
 
-public class Reminder extends Note {
+public class Reminder extends Note implements Expirable {
     private String Time;
 
     public String getTime() {
@@ -16,5 +16,20 @@ public class Reminder extends Note {
         return "Reminder{" +
                 "Time='" + Time + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean contains(String str) {
+        if (super.contains(str)) {
+           return true;
+        }else if (Time.contains(str)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isExpired() {
+        return false;
     }
 }

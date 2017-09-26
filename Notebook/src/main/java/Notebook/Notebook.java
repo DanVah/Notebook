@@ -12,12 +12,13 @@ public class Notebook {
 
 
     @Command
-    public void createPerson(String firstName, String lastName, String email, String address, String... phones) {
+    public void createPerson(String firstName, String lastName, String email, String address, String text,String... phones) {
         Person t = new Person();
         t.setFirstName(firstName);
         t.setLastName(lastName);
         t.setEmail(email);
         t.setAddress(address);
+        t.setNote(text);
         t.addPhones(phones);
         records.add(t);
     }
@@ -37,6 +38,13 @@ public class Notebook {
     }
 
     @Command
+    public void createAlarm (String time) {
+        Alarm t = new Alarm();
+        t.setTime (time);
+        records.add(t);
+    }
+
+    @Command
     public List<Record> list(){
         return records;
     }
@@ -50,5 +58,15 @@ public class Notebook {
                 break;
             }
         }
+    }
+    @Command
+    public List<Record> find(String str) {
+        List<Record> result = new ArrayList<>();
+        for (Record r : records) {
+            if (r.contains(str)) {
+                result.add(r);
+            }
+        }
+        return result;
     }
 }
